@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}My Computer{% endblock %}
+{% block content %}
+<div class="page-head"><p class="eyebrow">LIVE SYSTEM DETAILS</p><h1>My Computer</h1><p class="muted">Yeh information tumhare Parrot OS machine se detect hoti hai.</p></div>
+<div class="info-grid">
+<div class="info-card"><span>PROCESSOR</span><h3 id="cpu">{{ info.cpu }}</h3><p id="cpuMeta">{{ info.cpu_cores }} cores • {{ info.cpu_threads }} threads • {{ info.cpu_speed }}</p></div>
+<div class="info-card"><span>MEMORY / RAM</span><h3 id="ram">{{ info.ram_total_gb }} GB</h3><p id="ramMeta">{{ info.ram_used_gb }} GB used • {{ info.ram_percent }}%</p><div class="progress"><i id="ramBar" style="width:{{ info.ram_percent }}%"></i></div></div>
+<div class="info-card"><span>STORAGE</span><h3 id="disk">{{ info.disk_total_gb }} GB</h3><p id="diskMeta">{{ info.disk_used_gb }} GB used • {{ info.disk_free_gb }} GB free</p></div>
+<div class="info-card"><span>GRAPHICS</span><h3 id="gpu">{{ info.gpu }}</h3><p>Detected PCI graphics device</p></div>
+<div class="info-card"><span>OPERATING SYSTEM</span><h3 id="distribution">{{ info.distribution }}</h3><p id="osMeta">{{ info.os }} • {{ info.architecture }}</p></div>
+<div class="info-card"><span>NETWORK</span><h3 id="network">{{ info.network }}</h3><p>Detected network interfaces</p></div>
+<div class="info-card"><span>SYSTEM UPTIME</span><h3 id="uptime">{{ info.uptime }}</h3><p>Time since last boot</p></div>
+</div>
+<button class="btn primary" onclick="refreshComputer()">↻ Refresh information</button><p class="muted small" id="refreshStatus">Page load par information detect hui hai.</p>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Parrot Commands{% endblock %}
+{% block content %}
+<div class="page-head"><p class="eyebrow">LINUX REFERENCE</p><h1>Parrot OS Commands</h1><p class="muted">Basic se advanced tak useful Linux commands, description aur examples ke saath.</p></div>
+<div class="search-box compact"><span>⌕</span><input id="commandFilter" placeholder="Command ya category search karo..."></div>
+<div class="command-list" id="commandList">
+{% for key, item in commands.items() %}
+<article class="command-card" data-search="{{ key }} {{ item[0] }} {{ item[1] }} {{ item[3] }}">
+  <div class="command-top"><code>{{ key }}</code><span class="category">{{ item[3] }}</span></div>
+  <h3>{{ item[0] }}</h3><p>{{ item[1] }}</p>
+  <div class="example-row"><code>{{ item[2] }}</code><button class="copy-btn" data-copy="{{ item[2] }}">Copy</button></div>
+</article>
+{% endfor %}
+</div>
+<p id="noCommands" class="empty-state" hidden>Koi command nahi mila.</p>
+<div class="tip-panel warning"><b>Safety note</b><p><code>rm</code>, <code>chmod</code>, <code>chown</code>, <code>dd</code> aur <code>sudo</code> commands carefully use karo. Unknown commands copy-paste mat karo.</p></div>
+{% endblock %}

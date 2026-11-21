@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Sufyan OS Hub{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="browser">
+  <header class="browser-top">
+    <div class="traffic"><i></i><i></i><i></i></div>
+    <div class="tab active">🦜 Sufyan OS Hub</div>
+    <div class="tab muted-tab">Parrot Workspace</div>
+    <div class="browser-actions">−　□　×</div>
+  </header>
+  <div class="addressbar">
+    <span>←</span><span>→</span><span>↻</span>
+    <div class="address">🔒　localhost:5000</div>
+    <a href="{{ url_for('logout') }}" class="logout">Logout ↗</a>
+  </div>
+</div>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">🦜</span><div><b>SUFYAN OS</b><small>PERSONAL HUB</small></div></div>
+    <div class="side-label">WORKSPACE</div>
+    <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">⌂ <span>Dashboard</span></a>
+    <a href="{{ url_for('commands') }}" class="{% if request.endpoint == 'commands' %}active{% endif %}">⌘ <span>Parrot Commands</span></a>
+    <a href="{{ url_for('computer') }}" class="{% if request.endpoint == 'computer' %}active{% endif %}">▣ <span>My Computer</span></a>
+    <a href="{{ url_for('roblox') }}" class="{% if request.endpoint == 'roblox' %}active{% endif %}">🎮 <span>Roblox Studio</span></a>
+    <a href="{{ url_for('todo') }}" class="{% if request.endpoint in ['todo','todo_toggle','todo_delete'] %}active{% endif %}">✓ <span>To-do List</span></a>
+    <div class="side-label">MORE</div>
+    <a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">✉ <span>About & Contact</span></a>
+    <div class="sidebar-bottom"><span class="online-dot"></span> Parrot workspace<br><small>Local dashboard</small></div>
+  </aside>
+  <main class="main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <footer>Made by <b>Muhammad Sufyan Arif</b> <span>• Sufyan OS Hub</span></footer>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,340 @@
+
+{% extends "base.html" %}
+{% block title %}Roblox PC Compatibility Checker{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <p class="eyebrow">GAME DEVELOPMENT & GAMING CHECK</p>
+    <h1>Roblox PC Compatibility Checker</h1>
+    <p class="muted">
+        Apne PC ko Roblox Studio aur Roblox Player ke requirements
+        ke saath compare karo.
+    </p>
+</div>
+
+<div class="notice">
+    <b>Important:</b> Roblox officially Linux support nahi karta.
+    Studio ke liye Vinegar aur gameplay ke liye Sober unofficial Linux
+    workarounds hain.
+    <a href="https://create.roblox.com/docs/studio/setup" target="_blank">
+        Official Roblox requirements ↗
+    </a>
+</div>
+
+<div class="section-heading">
+    <div>
+        <p class="eyebrow">YOUR HARDWARE</p>
+        <h2>Detected PC information</h2>
+    </div>
+    <button class="btn secondary" onclick="location.reload()">↻ Refresh</button>
+</div>
+
+<div class="cards-grid">
+    <div class="feature-card">
+        <h3>Processor / CPU</h3>
+        <p>{{ info.cpu_model }}</p>
+        <b>{{ info.cpu_cores }} Physical Cores</b>
+        <p>{{ info.cpu_threads }} Threads</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Memory / RAM</h3>
+        <p>{{ info.ram_total_gb }} GB Total</p>
+        <b>{{ info.ram_available_gb }} GB Available</b>
+    </div>
+
+    <div class="feature-card">
+        <h3>Graphics / GPU</h3>
+        <p>{{ info.gpu }}</p>
+        <b>OpenGL {{ info.opengl_version }}</b>
+    </div>
+
+    <div class="feature-card">
+        <h3>Storage</h3>
+        <p>{{ info.disk_total_gb }} GB Total</p>
+        <b>{{ info.disk_free_gb }} GB Free</b>
+    </div>
+
+    <div class="feature-card">
+        <h3>Motherboard</h3>
+        <p>{{ info.motherboard }}</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Operating System</h3>
+        <p>{{ info.distribution }}</p>
+        <b>Kernel {{ info.kernel }}</b>
+        <p>{{ info.architecture }}</p>
+    </div>
+</div>
+
+<div class="section-heading">
+    <div>
+        <p class="eyebrow">01 — CREATE GAMES</p>
+        <h2>Roblox Studio — Vinegar Check</h2>
+    </div>
+</div>
+
+<div class="notice">
+    Vinegar Roblox Studio ko Linux par chalane ka unofficial tool hai.
+    Iske minimum graphics requirement OpenGL 4.4 hai.
+</div>
+
+<div class="requirement-list">
+
+    <div class="requirement">
+        <div>
+            <b>64-bit CPU</b>
+            <p>Required: x86-64 / AMD64. Your CPU: {{ info.architecture }}</p>
+        </div>
+        {% if info.is_x86_64 %}
+            <strong class="status good">✓ Supported</strong>
+        {% else %}
+            <strong class="status bad">✕ Not supported</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>CPU cores</b>
+            <p>Your CPU: {{ info.cpu_cores }} physical cores. 4 cores or more is a practical recommendation, not an official minimum.</p>
+        </div>
+        {% if info.cpu_cores >= 4 %}
+            <strong class="status good">✓ Good target</strong>
+        {% else %}
+            <strong class="status bad">✕ Below 4-core target</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>RAM — minimum 3 GB</b>
+            <p>Your RAM: {{ info.ram_total_gb }} GB</p>
+        </div>
+        {% if info.ram_total_gb >= 3 %}
+            <strong class="status good">✓ Minimum met</strong>
+        {% else %}
+            <strong class="status bad">✕ Upgrade needed</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>RAM — recommended 8 GB</b>
+            <p>Recommended for a smoother experience.</p>
+        </div>
+        {% if info.ram_total_gb >= 8 %}
+            <strong class="status good">✓ Recommended met</strong>
+        {% else %}
+            <strong class="status bad">✕ Need 8 GB</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>Graphics — OpenGL 4.4</b>
+            <p>Your graphics: {{ info.opengl_version }}</p>
+        </div>
+        {% if info.opengl_ok %}
+            <strong class="status good">✓ Minimum met</strong>
+        {% else %}
+            <strong class="status bad">✕ Not compatible</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>Linux kernel — minimum 2.6.22</b>
+            <p>Your kernel: {{ info.kernel }}</p>
+        </div>
+        {% if info.kernel_ok %}
+            <strong class="status good">✓ Minimum met</strong>
+        {% else %}
+            <strong class="status bad">✕ Too old</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>Vulkan 1.4 — recommended</b>
+            <p>Your Vulkan: {{ info.vulkan_version }}</p>
+        </div>
+        {% if info.vulkan_ok %}
+            <strong class="status good">✓ Recommended met</strong>
+        {% else %}
+            <strong class="status unknown">? Not detected</strong>
+        {% endif %}
+    </div>
+
+</div>
+
+<div class="section-heading">
+    <div>
+        <p class="eyebrow">02 — PLAY GAMES</p>
+        <h2>Roblox Player — Sober Check</h2>
+    </div>
+</div>
+
+<div class="notice">
+    Sober Roblox gameplay ke liye hai. Ye Roblox Studio ka replacement nahi.
+</div>
+
+<div class="requirement-list">
+
+    <div class="requirement">
+        <div>
+            <b>CPU instruction — SSE4.1</b>
+            <p>Required by Sober's documented minimum.</p>
+        </div>
+        {% if info.sse41 %}
+            <strong class="status good">✓ Supported</strong>
+        {% else %}
+            <strong class="status bad">✕ Not supported</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>CPU instruction — SSE4.2</b>
+            <p>Recommended for better compatibility and performance.</p>
+        </div>
+        {% if info.sse42 %}
+            <strong class="status good">✓ Supported</strong>
+        {% else %}
+            <strong class="status unknown">? Not detected</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>OpenGL ES 3.0</b>
+            <p>Your detected version: {{ info.gles_version }}</p>
+        </div>
+        {% if info.gles_ok %}
+            <strong class="status good">✓ Minimum met</strong>
+        {% else %}
+            <strong class="status bad">✕ Not detected</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>Linux kernel — minimum 5.11</b>
+            <p>Your kernel: {{ info.kernel }}</p>
+        </div>
+        {% if info.sober_kernel_ok %}
+            <strong class="status good">✓ Minimum met</strong>
+        {% else %}
+            <strong class="status bad">✕ Too old</strong>
+        {% endif %}
+    </div>
+
+    <div class="requirement">
+        <div>
+            <b>Vulkan 1.1 — recommended</b>
+            <p>Your Vulkan: {{ info.vulkan_version }}</p>
+        </div>
+        {% if info.vulkan11_ok %}
+            <strong class="status good">✓ Recommended met</strong>
+        {% else %}
+            <strong class="status unknown">? Not detected</strong>
+        {% endif %}
+    </div>
+
+</div>
+
+<div class="section-heading">
+    <div>
+        <p class="eyebrow">03 — UPGRADE GUIDE</p>
+        <h2>Recommended PC parts</h2>
+    </div>
+</div>
+
+<div class="cards-grid">
+
+    <div class="feature-card">
+        <h3>CPU / Processor</h3>
+        <p>Practical target: 4 physical cores minimum, 6 cores better.</p>
+        <p>Examples: Intel Core i5 8th Gen or newer, or a compatible AMD Ryzen 5.</p>
+        <p><b>Check:</b> lscpu</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>RAM</h3>
+        <p>8 GB target; 16 GB better for Studio and multitasking.</p>
+        <p>DDR3, DDR4 ya DDR5 motherboard ke mutabiq choose karo.</p>
+        <p><b>Check:</b> sudo dmidecode -t memory</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Graphics Card</h3>
+        <p>Linux Studio target: OpenGL 4.4 minimum; Vulkan 1.4 recommended.</p>
+        <p>Player target: OpenGL ES 3.0; Vulkan 1.1 recommended.</p>
+        <p><b>Check:</b> glxinfo -B</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>SSD</h3>
+        <p>256 GB SSD practical starting target. 512 GB gives more project space.</p>
+        <p><b>Check:</b> lsblk</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Motherboard</h3>
+        <p>CPU socket, RAM generation, RAM slots and maximum supported RAM check karo.</p>
+        <p><b>Check:</b> sudo dmidecode -t baseboard</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Power Supply</h3>
+        <p>GPU ke recommended PSU wattage aur PCIe power connectors check karo.</p>
+        <p><b>Check:</b> PSU label physically dekho. Software se exact PSU model detect nahi hota.</p>
+    </div>
+
+</div>
+
+<div class="section-heading">
+    <div>
+        <p class="eyebrow">04 — COMMAND CENTER</p>
+        <h2>Hardware checking commands</h2>
+    </div>
+</div>
+
+<div class="feature-card">
+    <p><b>CPU model, cores and threads</b></p>
+    <code>lscpu</code>
+    <p><b>RAM and memory slots</b></p>
+    <code>free -h</code>
+    <code>sudo dmidecode -t memory</code>
+    <p><b>Motherboard model</b></p>
+    <code>sudo dmidecode -t baseboard</code>
+    <p><b>GPU and driver</b></p>
+    <code>lspci -nnk | grep -A4 -Ei 'VGA|3D|Display'</code>
+    <p><b>OpenGL</b></p>
+    <code>glxinfo -B</code>
+    <p><b>Vulkan</b></p>
+    <code>vulkaninfo --summary</code>
+    <p><b>CPU SSE instructions</b></p>
+    <code>grep -m1 '^flags' /proc/cpuinfo</code>
+    <p><b>Storage</b></p>
+    <code>lsblk -o NAME,SIZE,MODEL,TYPE</code>
+    <p><b>Kernel</b></p>
+    <code>uname -r</code>
+</div>
+
+<div class="tip-panel">
+    <b>Important upgrade warning</b>
+    <p>
+        CPU, RAM aur GPU khareedne se pehle motherboard model,
+        CPU socket, RAM generation, PSU wattage aur case size check karo.
+        Har motherboard har processor ya graphics card support nahi karta.
+    </p>
+</div>
+
+<div class="notice">
+    <b>Detection note:</b> OpenGL ES aur Vulkan agar install nahi hain
+    ya driver unhein expose nahi karta to checker "not detected" show karega.
+    Iska matlab hamesha hardware failure nahi hota.
+</div>
+
+{% endblock %}

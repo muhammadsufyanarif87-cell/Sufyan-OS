@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block title %}Dashboard | Sufyan OS Hub{% endblock %}
+{% block content %}
+<section class="hero"><p class="eyebrow">WELCOME BACK, {{ username|upper }}</p><h1>Your Linux. Your Tools.<br><span>Your Workspace.</span></h1><p class="muted">Commands search karo ya apne computer ki information dekho.</p>
+<div class="search-box"><span>⌕</span><input id="searchInput" placeholder="Search ls, chmod, CPU, RAM, GPU..." autocomplete="off"><button class="btn primary" onclick="searchHub()">Search</button></div><div id="results" class="search-results"></div></section>
+<div class="section-heading"><div><p class="eyebrow">QUICK ACCESS</p><h2>Workspace tools</h2></div></div>
+<div class="cards-grid">
+<a class="feature-card" href="{{ url_for('commands') }}"><div class="feature-icon green">⌘</div><h3>Parrot Commands</h3><p>Linux commands, examples aur details.</p><span>Explore commands →</span></a>
+<a class="feature-card" href="{{ url_for('computer') }}"><div class="feature-icon blue">▣</div><h3>My Computer</h3><p>CPU, RAM, GPU, disk aur network details.</p><span>View PC info →</span></a>
+<a class="feature-card" href="{{ url_for('roblox') }}"><div class="feature-icon purple">🎮</div><h3>Roblox Studio</h3><p>Requirements aur tumhare PC ka comparison.</p><span>Check requirements →</span></a>
+<a class="feature-card" href="{{ url_for('todo') }}"><div class="feature-icon orange">✓</div><h3>To-do List</h3><p>Apne coding aur study tasks manage karo.</p><span>Open tasks →</span></a>
+</div>
+<div class="tip-panel"><b>⌁ Quick tip</b><p>Terminal mein <code>sudo apt update</code> package list refresh karta hai. Command chalane se pehle uska kaam samajh lo.</p></div>
+{% endblock %}

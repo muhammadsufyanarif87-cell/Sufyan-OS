@@ -1,0 +1,4 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Login | Sufyan OS Hub</title><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body class="login-page"><div class="login-card"><div class="login-logo">🦜</div><p class="eyebrow">PARROT WORKSPACE</p><h1>Sufyan OS Hub</h1><p class="muted">Apne personal dashboard mein login karein.</p>
+<form method="POST"><label>Username</label><input name="username" value="sufyan" autocomplete="username" required><label>Password</label><input type="password" name="password" placeholder="Enter password" autocomplete="current-password" required><button class="btn primary full" type="submit">Unlock Dashboard →</button></form>
+{% if error %}<p class="error-text">{{ error }}</p>{% endif %}<small class="muted">Private local dashboard</small></div></body></html>

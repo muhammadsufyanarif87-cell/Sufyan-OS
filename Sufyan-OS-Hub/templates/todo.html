@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block title %}To-do List{% endblock %}
+{% block content %}
+<div class="page-head"><p class="eyebrow">PERSONAL PLANNER</p><h1>My To-do List</h1><p class="muted">Study, coding aur projects ke tasks yahan save karo.</p></div>
+<form method="POST" class="todo-add"><input name="title" maxlength="180" placeholder="Naya task likho..." required><button class="btn primary" type="submit">＋ Add Task</button></form>
+<div class="todo-summary"><span>{{ tasks|length }} total tasks</span><span>{{ tasks|selectattr('completed')|list|length }} completed</span></div>
+<div class="todo-list">
+{% for task in tasks %}
+<div class="todo-item {% if task['completed'] %}done{% endif %}">
+<form method="POST" action="{{ url_for('todo_toggle', task_id=task['id']) }}"><button class="check-btn" title="Complete / undo">{% if task['completed'] %}✓{% else %}○{% endif %}</button></form>
+<div class="todo-title"><span>{{ task['title'] }}</span><small>{{ task['created_at'] }}</small></div>
+<form method="POST" action="{{ url_for('todo_delete', task_id=task['id']) }}" onsubmit="return confirm('Is task ko delete karna hai?')"><button class="delete-btn" title="Delete task">✕</button></form>
+</div>
+{% else %}
+<div class="empty-state">Abhi koi task nahi. Upar apna pehla task add karo.</div>
+{% endfor %}
+</div>
+{% endblock %}
